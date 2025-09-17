@@ -351,49 +351,143 @@
                 </div>
             </div>
 
-            <!-- Charts -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-pink-600">สถานะงาน</h3>
-                    <div class="h-64 flex items-center justify-center">
-                        <canvas id="statusChart" width="300" height="300"></canvas>
+            <!-- Charts Section -->
+            <div class="space-y-6 mb-8">
+                <!-- Top Row Charts - Responsive Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+                    <!-- Status Chart -->
+                    <div class="bg-white rounded-lg shadow-md p-4 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-base md:text-lg font-semibold text-pink-600">สถานะงาน</h3>
+                            <button onclick="toggleChartFullscreen('statusChart')" class="text-gray-400 hover:text-pink-600 transition-colors" title="ขยายแผนภูมิ">
+                                <i class="fas fa-expand text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <div class="h-48 md:h-64 flex items-center justify-center">
+                                <canvas id="statusChart" class="max-w-full max-h-full"></canvas>
+                            </div>
+                            <!-- Mobile Legend -->
+                            <div id="statusLegend" class="mt-3 md:hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- Group Chart -->
+                    <div class="bg-white rounded-lg shadow-md p-4 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-base md:text-lg font-semibold text-pink-600">งานตามกลุ่ม</h3>
+                            <button onclick="toggleChartFullscreen('groupChart')" class="text-gray-400 hover:text-pink-600 transition-colors" title="ขยายแผนภูมิ">
+                                <i class="fas fa-expand text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <div class="h-48 md:h-64 flex items-center justify-center overflow-hidden">
+                                <canvas id="groupChart" class="max-w-full max-h-full"></canvas>
+                            </div>
+                            <!-- Mobile Scroll Hint -->
+                            <div class="md:hidden text-xs text-gray-500 text-center mt-2">
+                                <i class="fas fa-arrows-alt-h mr-1"></i>เลื่อนซ้าย-ขวาเพื่อดูข้อมูล
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Priority Chart -->
+                    <div class="bg-white rounded-lg shadow-md p-4 md:p-6 md:col-span-2 xl:col-span-1">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-base md:text-lg font-semibold text-pink-600">ระดับความสำคัญ</h3>
+                            <button onclick="toggleChartFullscreen('priorityChart')" class="text-gray-400 hover:text-pink-600 transition-colors" title="ขยายแผนภูมิ">
+                                <i class="fas fa-expand text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <div class="h-48 md:h-64 flex items-center justify-center">
+                                <canvas id="priorityChart" class="max-w-full max-h-full"></canvas>
+                            </div>
+                            <!-- Mobile Legend -->
+                            <div id="priorityLegend" class="mt-3 md:hidden"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-pink-600">งานตามกลุ่ม</h3>
-                    <div class="h-64 flex items-center justify-center">
-                        <canvas id="groupChart" width="300" height="300"></canvas>
+
+                <!-- Middle Row Charts -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                    <!-- Monthly Chart -->
+                    <div class="bg-white rounded-lg shadow-md p-4 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-base md:text-lg font-semibold text-pink-600">งานรายเดือน</h3>
+                            <button onclick="toggleChartFullscreen('monthlyChart')" class="text-gray-400 hover:text-pink-600 transition-colors" title="ขยายแผนภูมิ">
+                                <i class="fas fa-expand text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <div class="h-48 md:h-64 flex items-center justify-center overflow-hidden">
+                                <canvas id="monthlyChart" class="max-w-full max-h-full"></canvas>
+                            </div>
+                            <!-- Mobile Data Summary -->
+                            <div id="monthlySummary" class="md:hidden mt-3 text-xs text-gray-600 bg-gray-50 p-2 rounded"></div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Chart -->
+                    <div class="bg-white rounded-lg shadow-md p-4 md:p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-base md:text-lg font-semibold text-pink-600">ประสิทธิภาพการทำงาน</h3>
+                            <button onclick="toggleChartFullscreen('performanceChart')" class="text-gray-400 hover:text-pink-600 transition-colors" title="ขยายแผนภูมิ">
+                                <i class="fas fa-expand text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <div class="h-48 md:h-64 flex items-center justify-center">
+                                <canvas id="performanceChart" class="max-w-full max-h-full"></canvas>
+                            </div>
+                            <!-- Mobile Performance Summary -->
+                            <div id="performanceSummary" class="md:hidden mt-3 text-xs text-gray-600 bg-gray-50 p-2 rounded"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-pink-600">ระดับความสำคัญ</h3>
-                    <div class="h-64 flex items-center justify-center">
-                        <canvas id="priorityChart" width="300" height="300"></canvas>
+
+                <!-- Workload Analysis - Full Width -->
+                <div class="bg-white rounded-lg shadow-md p-4 md:p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-base md:text-lg font-semibold text-pink-600">การกระจายภาระงานรายบุคคล</h3>
+                        <button onclick="toggleChartFullscreen('workloadChart')" class="text-gray-400 hover:text-pink-600 transition-colors" title="ขยายแผนภูมิ">
+                            <i class="fas fa-expand text-sm"></i>
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <!-- Desktop View -->
+                        <div class="hidden md:block h-64 lg:h-80 flex items-center justify-center">
+                            <canvas id="workloadChart" class="max-w-full max-h-full"></canvas>
+                        </div>
+                        <!-- Mobile View -->
+                        <div class="md:hidden">
+                            <div class="h-64 flex items-center justify-center overflow-x-auto">
+                                <canvas id="workloadChartMobile" class="min-w-full max-h-full"></canvas>
+                            </div>
+                            <div class="text-xs text-gray-500 text-center mt-2">
+                                <i class="fas fa-arrows-alt-h mr-1"></i>เลื่อนซ้าย-ขวาเพื่อดูข้อมูลทั้งหมด
+                            </div>
+                            <!-- Mobile Workload Summary -->
+                            <div id="workloadSummary" class="mt-3 text-xs text-gray-600 bg-gray-50 p-2 rounded"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Additional Charts Row -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-pink-600">งานรายเดือน</h3>
-                    <div class="h-64 flex items-center justify-center">
-                        <canvas id="monthlyChart" width="400" height="200"></canvas>
+            <!-- Chart Fullscreen Modal -->
+            <div id="chartModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden items-center justify-center p-4">
+                <div class="bg-white rounded-lg max-w-6xl w-full max-h-full overflow-hidden">
+                    <div class="flex items-center justify-between p-4 border-b">
+                        <h3 id="chartModalTitle" class="text-lg font-semibold text-pink-600"></h3>
+                        <button onclick="closeChartModal()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
                     </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-pink-600">ประสิทธิภาพการทำงาน</h3>
-                    <div class="h-64 flex items-center justify-center">
-                        <canvas id="performanceChart" width="400" height="200"></canvas>
+                    <div class="p-4">
+                        <div class="h-96 flex items-center justify-center">
+                            <canvas id="modalChart" class="max-w-full max-h-full"></canvas>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Workload Analysis -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-                <h3 class="text-lg font-semibold mb-4 text-pink-600">การกระจายภาระงานรายบุคคล</h3>
-                <div class="h-80 flex items-center justify-center">
-                    <canvas id="workloadChart" width="800" height="400"></canvas>
                 </div>
             </div>
 
@@ -631,6 +725,8 @@
         let monthlyChart = null;
         let performanceChart = null;
         let workloadChart = null;
+        let workloadChartMobile = null;
+        let modalChart = null;
         
         // DataTable instances
         let staffDataTable = null;
@@ -1694,9 +1790,10 @@
                 const monthlyCanvas = document.getElementById('monthlyChart');
                 const performanceCanvas = document.getElementById('performanceChart');
                 const workloadCanvas = document.getElementById('workloadChart');
+                const workloadCanvasMobile = document.getElementById('workloadChartMobile');
                 
                 // Destroy existing chart instances if they exist
-                const charts = [statusChart, groupChart, priorityChart, monthlyChart, performanceChart, workloadChart];
+                const charts = [statusChart, groupChart, priorityChart, monthlyChart, performanceChart, workloadChart, workloadChartMobile, modalChart];
                 charts.forEach(chart => {
                     if (chart) {
                         try {
@@ -1708,7 +1805,7 @@
                 });
                 
                 // Reset chart variables
-                statusChart = groupChart = priorityChart = monthlyChart = performanceChart = workloadChart = null;
+                statusChart = groupChart = priorityChart = monthlyChart = performanceChart = workloadChart = workloadChartMobile = modalChart = null;
 
                 // Check if there are any tasks
                 if (!tasks || tasks.length === 0) {
@@ -1763,6 +1860,9 @@
                             statusColors.push('#e5e7eb');
                         }
 
+                        // Check if mobile
+                        const isMobile = window.innerWidth < 768;
+
                         statusChart = new Chart(statusCtx, {
                             type: 'doughnut',
                             data: {
@@ -1779,12 +1879,14 @@
                                 maintainAspectRatio: false,
                                 plugins: {
                                     legend: {
+                                        display: !isMobile,
                                         position: 'bottom',
                                         labels: {
-                                            padding: 20,
+                                            padding: isMobile ? 10 : 20,
                                             usePointStyle: true,
                                             font: {
-                                                family: 'Sarabun'
+                                                family: 'Sarabun',
+                                                size: isMobile ? 10 : 12
                                             }
                                         }
                                     },
@@ -1800,6 +1902,12 @@
                                 }
                             }
                         });
+
+                        // Create mobile legend
+                        if (isMobile) {
+                            createMobileLegend('statusLegend', statusLabels, statusColors, statusData);
+                        }
+
                         console.log('✅ Status chart created successfully');
                     } catch (error) {
                         console.error('❌ Error creating status chart:', error);
@@ -1863,10 +1971,14 @@
                             }
                         }
 
-                        // Truncate long group names for display
+                        // Check if mobile
+                        const isMobile = window.innerWidth < 768;
+
+                        // Truncate long group names for display based on screen size
                         const displayLabels = groups.map(group => {
-                            if (group.length > 20) {
-                                return group.substring(0, 17) + '...';
+                            const maxLength = isMobile ? 10 : 20;
+                            if (group.length > maxLength) {
+                                return group.substring(0, maxLength - 3) + '...';
                             }
                             return group;
                         });
@@ -1886,23 +1998,26 @@
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
+                                indexAxis: isMobile ? 'y' : 'x', // Horizontal bars on mobile
                                 scales: {
                                     y: {
                                         beginAtZero: true,
                                         ticks: {
                                             stepSize: 1,
                                             font: {
-                                                family: 'Sarabun'
+                                                family: 'Sarabun',
+                                                size: isMobile ? 10 : 12
                                             }
                                         }
                                     },
                                     x: {
+                                        beginAtZero: true,
                                         ticks: {
-                                            maxRotation: 45,
+                                            maxRotation: isMobile ? 0 : 45,
                                             minRotation: 0,
                                             font: {
                                                 family: 'Sarabun',
-                                                size: 11
+                                                size: isMobile ? 10 : 11
                                             }
                                         }
                                     }
@@ -1918,7 +2033,7 @@
                                                 return groups[context[0].dataIndex];
                                             },
                                             label: function(context) {
-                                                return `จำนวนงาน: ${context.parsed.y} งาน`;
+                                                return `จำนวนงาน: ${isMobile ? context.parsed.x : context.parsed.y} งาน`;
                                             }
                                         }
                                     }
@@ -1977,6 +2092,9 @@
                             priorityColors.push('#e5e7eb');
                         }
 
+                        // Check if mobile
+                        const isMobile = window.innerWidth < 768;
+
                         priorityChart = new Chart(priorityCtx, {
                             type: 'pie',
                             data: {
@@ -1993,12 +2111,13 @@
                                 maintainAspectRatio: false,
                                 plugins: {
                                     legend: {
+                                        display: !isMobile,
                                         position: 'bottom',
                                         labels: {
-                                            padding: 15,
+                                            padding: isMobile ? 10 : 15,
                                             usePointStyle: true,
                                             font: {
-                                                size: 10,
+                                                size: isMobile ? 9 : 10,
                                                 family: 'Sarabun'
                                             }
                                         }
@@ -2015,6 +2134,12 @@
                                 }
                             }
                         });
+
+                        // Create mobile legend
+                        if (isMobile) {
+                            createMobileLegend('priorityLegend', priorityLabels, priorityColors, priorityData);
+                        }
+
                         console.log('✅ Priority chart created successfully');
                     } catch (error) {
                         console.error('❌ Error creating priority chart:', error);
@@ -2029,6 +2154,9 @@
 
                         console.log('📅 Monthly data:', monthlyData);
 
+                        // Check if mobile
+                        const isMobile = window.innerWidth < 768;
+
                         monthlyChart = new Chart(monthlyCtx, {
                             type: 'line',
                             data: {
@@ -2042,8 +2170,8 @@
                                     fill: true,
                                     pointBackgroundColor: '#ec4899',
                                     pointBorderColor: '#ffffff',
-                                    pointBorderWidth: 2,
-                                    pointRadius: 4
+                                    pointBorderWidth: isMobile ? 1 : 2,
+                                    pointRadius: isMobile ? 3 : 4
                                 }, {
                                     label: 'งานเสร็จ',
                                     data: monthlyData.completedTasks,
@@ -2053,37 +2181,45 @@
                                     fill: true,
                                     pointBackgroundColor: '#10b981',
                                     pointBorderColor: '#ffffff',
-                                    pointBorderWidth: 2,
-                                    pointRadius: 4
+                                    pointBorderWidth: isMobile ? 1 : 2,
+                                    pointRadius: isMobile ? 3 : 4
                                 }]
                             },
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
+                                interaction: {
+                                    intersect: false,
+                                    mode: 'index'
+                                },
                                 scales: {
                                     y: {
                                         beginAtZero: true,
                                         ticks: {
                                             stepSize: 1,
                                             font: {
-                                                family: 'Sarabun'
+                                                family: 'Sarabun',
+                                                size: isMobile ? 10 : 12
                                             }
                                         }
                                     },
                                     x: {
                                         ticks: {
                                             font: {
-                                                family: 'Sarabun'
+                                                family: 'Sarabun',
+                                                size: isMobile ? 9 : 11
                                             }
                                         }
                                     }
                                 },
                                 plugins: {
                                     legend: {
+                                        display: !isMobile,
                                         position: 'top',
                                         labels: {
                                             font: {
-                                                family: 'Sarabun'
+                                                family: 'Sarabun',
+                                                size: isMobile ? 10 : 12
                                             }
                                         }
                                     },
@@ -2097,6 +2233,28 @@
                                 }
                             }
                         });
+
+                        // Create mobile summary
+                        if (isMobile) {
+                            const totalNew = monthlyData.newTasks.reduce((a, b) => a + b, 0);
+                            const totalCompleted = monthlyData.completedTasks.reduce((a, b) => a + b, 0);
+                            const summaryElement = document.getElementById('monthlySummary');
+                            if (summaryElement) {
+                                summaryElement.innerHTML = `
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-pink-500 rounded-full mr-2"></div>
+                                            <span>งานใหม่: ${totalNew}</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                                            <span>งานเสร็จ: ${totalCompleted}</span>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        }
+
                         console.log('✅ Monthly chart created successfully');
                     } catch (error) {
                         console.error('❌ Error creating monthly chart:', error);
@@ -2111,10 +2269,15 @@
 
                         console.log('⚡ Performance data:', performanceData);
 
+                        // Check if mobile
+                        const isMobile = window.innerWidth < 768;
+
+                        const labels = ['ความเร็ว', 'คุณภาพ', 'ความสม่ำเสมอ', 'การทำงานร่วมกัน', 'นวัตกรรม', 'ความรับผิดชอบ'];
+
                         performanceChart = new Chart(performanceCtx, {
                             type: 'radar',
                             data: {
-                                labels: ['ความเร็ว', 'คุณภาพ', 'ความสม่ำเสมอ', 'การทำงานร่วมกัน', 'นวัตกรรม', 'ความรับผิดชอบ'],
+                                labels: labels,
                                 datasets: [{
                                     label: 'ประสิทธิภาพโดยรวม',
                                     data: performanceData,
@@ -2122,8 +2285,8 @@
                                     backgroundColor: 'rgba(236, 72, 153, 0.2)',
                                     pointBackgroundColor: '#ec4899',
                                     pointBorderColor: '#ffffff',
-                                    pointBorderWidth: 2,
-                                    pointRadius: 5
+                                    pointBorderWidth: isMobile ? 1 : 2,
+                                    pointRadius: isMobile ? 3 : 5
                                 }]
                             },
                             options: {
@@ -2135,25 +2298,31 @@
                                         max: 100,
                                         ticks: {
                                             stepSize: 20,
+                                            display: !isMobile,
                                             font: {
                                                 family: 'Sarabun',
-                                                size: 10
+                                                size: isMobile ? 8 : 10
                                             }
                                         },
                                         pointLabels: {
                                             font: {
                                                 family: 'Sarabun',
-                                                size: 11
+                                                size: isMobile ? 9 : 11
                                             }
+                                        },
+                                        grid: {
+                                            color: isMobile ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0.2)'
                                         }
                                     }
                                 },
                                 plugins: {
                                     legend: {
+                                        display: !isMobile,
                                         position: 'top',
                                         labels: {
                                             font: {
-                                                family: 'Sarabun'
+                                                family: 'Sarabun',
+                                                size: isMobile ? 10 : 12
                                             }
                                         }
                                     },
@@ -2167,6 +2336,28 @@
                                 }
                             }
                         });
+
+                        // Create mobile summary
+                        if (isMobile) {
+                            const avgPerformance = Math.round(performanceData.reduce((a, b) => a + b, 0) / performanceData.length);
+                            const summaryElement = document.getElementById('performanceSummary');
+                            if (summaryElement) {
+                                summaryElement.innerHTML = `
+                                    <div class="text-center">
+                                        <div class="text-lg font-bold text-pink-600 mb-2">ประสิทธิภาพโดยรวม: ${avgPerformance}%</div>
+                                        <div class="grid grid-cols-2 gap-2 text-xs">
+                                            ${labels.map((label, index) => `
+                                                <div class="flex justify-between">
+                                                    <span>${label}:</span>
+                                                    <span class="font-semibold">${performanceData[index]}%</span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        }
+
                         console.log('✅ Performance chart created successfully');
                     } catch (error) {
                         console.error('❌ Error creating performance chart:', error);
@@ -2174,94 +2365,206 @@
                 }
 
                 // 6. Workload Chart (Horizontal Bar) - แผนภูมิการกระจายภาระงานรายบุคคล
-                if (workloadCanvas) {
+                if (workloadCanvas || workloadCanvasMobile) {
                     try {
-                        const workloadCtx = workloadCanvas.getContext('2d');
                         const workloadData = getWorkloadData();
-
                         console.log('👥 Workload data:', workloadData);
 
+                        // Check if mobile
+                        const isMobile = window.innerWidth < 768;
+                        const canvas = isMobile ? workloadCanvasMobile : workloadCanvas;
+                        
+                        if (!canvas) {
+                            console.warn('Workload canvas not found for current device type');
+                            return;
+                        }
+
+                        const workloadCtx = canvas.getContext('2d');
+
                         if (workloadData.labels.length > 0) {
-                            workloadChart = new Chart(workloadCtx, {
-                                type: 'bar',
-                                data: {
-                                    labels: workloadData.labels.map(name => {
-                                        // Truncate long names for display
-                                        if (name.length > 25) {
-                                            return name.substring(0, 22) + '...';
-                                        }
-                                        return name;
-                                    }),
-                                    datasets: [{
-                                        label: 'งานทั้งหมด',
-                                        data: workloadData.total,
-                                        backgroundColor: 'rgba(236, 72, 153, 0.8)',
-                                        borderColor: 'rgba(236, 72, 153, 1)',
-                                        borderWidth: 1
-                                    }, {
-                                        label: 'งานเสร็จ',
-                                        data: workloadData.completed,
-                                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
-                                        borderColor: 'rgba(16, 185, 129, 1)',
-                                        borderWidth: 1
-                                    }, {
-                                        label: 'งานล่าช้า',
-                                        data: workloadData.delayed,
-                                        backgroundColor: 'rgba(245, 158, 11, 0.8)',
-                                        borderColor: 'rgba(245, 158, 11, 1)',
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    indexAxis: 'y',
-                                    scales: {
-                                        x: {
-                                            beginAtZero: true,
-                                            ticks: {
-                                                stepSize: 1,
-                                                font: {
-                                                    family: 'Sarabun'
-                                                }
-                                            }
-                                        },
-                                        y: {
-                                            ticks: {
-                                                font: {
-                                                    family: 'Sarabun',
-                                                    size: 11
-                                                }
-                                            }
-                                        }
+                            // Prepare labels based on device
+                            const displayLabels = workloadData.labels.map(name => {
+                                const maxLength = isMobile ? 15 : 25;
+                                if (name.length > maxLength) {
+                                    return name.substring(0, maxLength - 3) + '...';
+                                }
+                                return name;
+                            });
+
+                            const chartInstance = isMobile ? 'workloadChartMobile' : 'workloadChart';
+                            
+                            if (isMobile) {
+                                workloadChartMobile = new Chart(workloadCtx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: displayLabels,
+                                        datasets: [{
+                                            label: 'งานทั้งหมด',
+                                            data: workloadData.total,
+                                            backgroundColor: 'rgba(236, 72, 153, 0.8)',
+                                            borderColor: 'rgba(236, 72, 153, 1)',
+                                            borderWidth: 1
+                                        }, {
+                                            label: 'งานเสร็จ',
+                                            data: workloadData.completed,
+                                            backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                                            borderColor: 'rgba(16, 185, 129, 1)',
+                                            borderWidth: 1
+                                        }, {
+                                            label: 'งานล่าช้า',
+                                            data: workloadData.delayed,
+                                            backgroundColor: 'rgba(245, 158, 11, 0.8)',
+                                            borderColor: 'rgba(245, 158, 11, 1)',
+                                            borderWidth: 1
+                                        }]
                                     },
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                            labels: {
-                                                font: {
-                                                    family: 'Sarabun'
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        indexAxis: 'y',
+                                        scales: {
+                                            x: {
+                                                beginAtZero: true,
+                                                ticks: {
+                                                    stepSize: 1,
+                                                    font: {
+                                                        family: 'Sarabun',
+                                                        size: 10
+                                                    }
+                                                }
+                                            },
+                                            y: {
+                                                ticks: {
+                                                    font: {
+                                                        family: 'Sarabun',
+                                                        size: 9
+                                                    }
                                                 }
                                             }
                                         },
-                                        tooltip: {
-                                            callbacks: {
-                                                title: function(context) {
-                                                    // Show full name in tooltip
-                                                    return workloadData.labels[context[0].dataIndex];
-                                                },
-                                                label: function(context) {
-                                                    return `${context.dataset.label}: ${context.parsed.x} งาน`;
+                                        plugins: {
+                                            legend: {
+                                                display: false
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    title: function(context) {
+                                                        return workloadData.labels[context[0].dataIndex];
+                                                    },
+                                                    label: function(context) {
+                                                        return `${context.dataset.label}: ${context.parsed.x} งาน`;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
+                                });
+
+                                // Create mobile summary
+                                const summaryElement = document.getElementById('workloadSummary');
+                                if (summaryElement) {
+                                    const totalTasks = workloadData.total.reduce((a, b) => a + b, 0);
+                                    const totalCompleted = workloadData.completed.reduce((a, b) => a + b, 0);
+                                    const totalDelayed = workloadData.delayed.reduce((a, b) => a + b, 0);
+                                    
+                                    summaryElement.innerHTML = `
+                                        <div class="grid grid-cols-3 gap-2 text-center">
+                                            <div>
+                                                <div class="w-3 h-3 bg-pink-500 rounded-full mx-auto mb-1"></div>
+                                                <div class="font-semibold">${totalTasks}</div>
+                                                <div class="text-xs">งานทั้งหมด</div>
+                                            </div>
+                                            <div>
+                                                <div class="w-3 h-3 bg-green-500 rounded-full mx-auto mb-1"></div>
+                                                <div class="font-semibold">${totalCompleted}</div>
+                                                <div class="text-xs">งานเสร็จ</div>
+                                            </div>
+                                            <div>
+                                                <div class="w-3 h-3 bg-yellow-500 rounded-full mx-auto mb-1"></div>
+                                                <div class="font-semibold">${totalDelayed}</div>
+                                                <div class="text-xs">งานล่าช้า</div>
+                                            </div>
+                                        </div>
+                                    `;
                                 }
-                            });
+                            } else {
+                                workloadChart = new Chart(workloadCtx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: displayLabels,
+                                        datasets: [{
+                                            label: 'งานทั้งหมด',
+                                            data: workloadData.total,
+                                            backgroundColor: 'rgba(236, 72, 153, 0.8)',
+                                            borderColor: 'rgba(236, 72, 153, 1)',
+                                            borderWidth: 1
+                                        }, {
+                                            label: 'งานเสร็จ',
+                                            data: workloadData.completed,
+                                            backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                                            borderColor: 'rgba(16, 185, 129, 1)',
+                                            borderWidth: 1
+                                        }, {
+                                            label: 'งานล่าช้า',
+                                            data: workloadData.delayed,
+                                            backgroundColor: 'rgba(245, 158, 11, 0.8)',
+                                            borderColor: 'rgba(245, 158, 11, 1)',
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        indexAxis: 'y',
+                                        scales: {
+                                            x: {
+                                                beginAtZero: true,
+                                                ticks: {
+                                                    stepSize: 1,
+                                                    font: {
+                                                        family: 'Sarabun',
+                                                        size: 12
+                                                    }
+                                                }
+                                            },
+                                            y: {
+                                                ticks: {
+                                                    font: {
+                                                        family: 'Sarabun',
+                                                        size: 11
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        plugins: {
+                                            legend: {
+                                                position: 'top',
+                                                labels: {
+                                                    font: {
+                                                        family: 'Sarabun',
+                                                        size: 12
+                                                    }
+                                                }
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    title: function(context) {
+                                                        return workloadData.labels[context[0].dataIndex];
+                                                    },
+                                                    label: function(context) {
+                                                        return `${context.dataset.label}: ${context.parsed.x} งาน`;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                            
                             console.log('✅ Workload chart created successfully');
                         } else {
                             // Create empty chart if no staff data
-                            workloadChart = new Chart(workloadCtx, {
+                            const emptyChart = new Chart(workloadCtx, {
                                 type: 'bar',
                                 data: {
                                     labels: ['ไม่มีข้อมูล'],
@@ -2281,6 +2584,13 @@
                                     }
                                 }
                             });
+                            
+                            if (isMobile) {
+                                workloadChartMobile = emptyChart;
+                            } else {
+                                workloadChart = emptyChart;
+                            }
+                            
                             console.log('⚠️ Created empty workload chart');
                         }
                     } catch (error) {
@@ -4184,6 +4494,180 @@
             });
         }
 
+        // Helper function to create mobile legend
+        function createMobileLegend(elementId, labels, colors, data) {
+            const legendElement = document.getElementById(elementId);
+            if (!legendElement) return;
+
+            const total = data.reduce((a, b) => a + b, 0);
+            
+            legendElement.innerHTML = `
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    ${labels.map((label, index) => {
+                        const percentage = total > 0 ? ((data[index] * 100) / total).toFixed(1) : 0;
+                        return `
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full mr-2" style="background-color: ${colors[index]}"></div>
+                                <div class="flex-1">
+                                    <div class="font-semibold">${label}</div>
+                                    <div class="text-gray-500">${data[index]} งาน (${percentage}%)</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        // Chart fullscreen functions
+        function toggleChartFullscreen(chartId) {
+            const modal = document.getElementById('chartModal');
+            const modalTitle = document.getElementById('chartModalTitle');
+            const modalCanvas = document.getElementById('modalChart');
+            
+            if (!modal || !modalTitle || !modalCanvas) return;
+
+            // Get chart title
+            const titles = {
+                'statusChart': 'แผนภูมิสถานะงาน',
+                'groupChart': 'แผนภูมิงานตามกลุ่ม',
+                'priorityChart': 'แผนภูมิระดับความสำคัญ',
+                'monthlyChart': 'แผนภูมิงานรายเดือน',
+                'performanceChart': 'แผนภูมิประสิทธิภาพการทำงาน',
+                'workloadChart': 'แผนภูมิการกระจายภาระงานรายบุคคล'
+            };
+
+            modalTitle.textContent = titles[chartId] || 'แผนภูมิ';
+            
+            // Show modal
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Clone chart data and create new chart in modal
+            setTimeout(() => {
+                try {
+                    const originalChart = getChartInstance(chartId);
+                    if (originalChart) {
+                        const modalCtx = modalCanvas.getContext('2d');
+                        
+                        // Destroy existing modal chart
+                        if (modalChart) {
+                            modalChart.destroy();
+                        }
+                        
+                        // Create new chart with same data but optimized for fullscreen
+                        modalChart = new Chart(modalCtx, {
+                            type: originalChart.config.type,
+                            data: JSON.parse(JSON.stringify(originalChart.data)),
+                            options: {
+                                ...originalChart.options,
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    ...originalChart.options.plugins,
+                                    legend: {
+                                        ...originalChart.options.plugins?.legend,
+                                        display: true,
+                                        position: 'top',
+                                        labels: {
+                                            ...originalChart.options.plugins?.legend?.labels,
+                                            font: {
+                                                family: 'Sarabun',
+                                                size: 14
+                                            }
+                                        }
+                                    }
+                                },
+                                scales: originalChart.options.scales ? {
+                                    ...originalChart.options.scales,
+                                    x: originalChart.options.scales.x ? {
+                                        ...originalChart.options.scales.x,
+                                        ticks: {
+                                            ...originalChart.options.scales.x.ticks,
+                                            font: {
+                                                family: 'Sarabun',
+                                                size: 12
+                                            }
+                                        }
+                                    } : undefined,
+                                    y: originalChart.options.scales.y ? {
+                                        ...originalChart.options.scales.y,
+                                        ticks: {
+                                            ...originalChart.options.scales.y.ticks,
+                                            font: {
+                                                family: 'Sarabun',
+                                                size: 12
+                                            }
+                                        }
+                                    } : undefined,
+                                    r: originalChart.options.scales.r ? {
+                                        ...originalChart.options.scales.r,
+                                        ticks: {
+                                            ...originalChart.options.scales.r.ticks,
+                                            font: {
+                                                family: 'Sarabun',
+                                                size: 12
+                                            }
+                                        },
+                                        pointLabels: {
+                                            ...originalChart.options.scales.r.pointLabels,
+                                            font: {
+                                                family: 'Sarabun',
+                                                size: 14
+                                            }
+                                        }
+                                    } : undefined
+                                } : undefined
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error creating fullscreen chart:', error);
+                }
+            }, 100);
+        }
+
+        function closeChartModal() {
+            const modal = document.getElementById('chartModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+            
+            // Destroy modal chart
+            if (modalChart) {
+                modalChart.destroy();
+                modalChart = null;
+            }
+        }
+
+        function getChartInstance(chartId) {
+            switch (chartId) {
+                case 'statusChart': return statusChart;
+                case 'groupChart': return groupChart;
+                case 'priorityChart': return priorityChart;
+                case 'monthlyChart': return monthlyChart;
+                case 'performanceChart': return performanceChart;
+                case 'workloadChart': return workloadChart || workloadChartMobile;
+                default: return null;
+            }
+        }
+
+        // Handle window resize for responsive charts
+        function handleWindowResize() {
+            // Debounce resize events
+            clearTimeout(window.resizeTimeout);
+            window.resizeTimeout = setTimeout(() => {
+                if (currentPage === 'dashboard') {
+                    console.log('🔄 Window resized, updating charts...');
+                    updateCharts();
+                }
+            }, 300);
+        }
+
+        // Add resize listener
+        window.addEventListener('resize', handleWindowResize);
+
         // Initialize the application when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOM loaded, initializing application...');
@@ -4274,5 +4758,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980a8df4d6ea26cd',t:'MTc1ODEzMjU2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980aa72c86ec7b3c',t:'MTc1ODEzMzU5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
